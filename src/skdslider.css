@@ -1,0 +1,38 @@
+/* CSS Document */
+#slider {
+    height: 592px;
+	position:relative;
+}
+#slider .slide{ display:none;
+    min-height: 100%;
+	min-width: 1024px;		
+	width: 100%;
+	height: auto;
+	position:absolute;
+	top: 0;
+	left: 0;
+}
+
+
+#slider .slide-links {
+    bottom: 20px;
+    left: 50%;
+    position: absolute;
+	list-style-type: none;
+	 margin: 0;
+    padding: 0;
+}
+
+
+#slider .slide-links li {
+    float: left;
+	background: url("image/slide-bg.png") no-repeat scroll 0 0 transparent;
+	height:12px;
+	width:12px;
+	margin-right:4px;
+	cursor:pointer;
+}
+
+#slider .slide-links li.current-slide {
+  background: url("image/slide-bg-active.png") no-repeat scroll 0 0 transparent;
+}
