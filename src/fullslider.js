@@ -11,8 +11,9 @@
  *
 
 // ========================================================= */
+
 (function($){
-    $.skdslider = function(container,options){
+    $.fullslider = function(container,options){
         // settings
         var config = {
             'delay': 2000,
@@ -25,20 +26,19 @@
         // variables
        
 	    var element=$(container);
-		element.find('ul').addClass('slides');
         var slides = element.find('ul.slides li');
 		var targetSlide=0;
-		$.skdslider.currentSlide=0;
+		$.fullslider.currentSlide=0;
 	   
-	    $.skdslider.createNav(element,slides, config);
+	    $.fullslider.createNav(element,slides, config);
 	    slides.eq(targetSlide).show();
-        $.skdslider.interval=setTimeout(function() {
-                    $.skdslider.playSlide(element,slides, config);
+        $.fullslider.interval=setTimeout(function() {
+                    $.fullslider.playSlide(element,slides, config);
                 }, config.delay);  
     };
 	
 
-  $.skdslider.createNav=function(element,slides,config){
+  $.fullslider.createNav=function(element,slides,config){
 			
 			var slideSet ='<ul class="slide-navs">';
 			for(i=0;i<slides.length;i++){
@@ -63,43 +63,43 @@
 					element.find('.slide-navs li').click(function(){
 						index = element.find('.slide-navs li').index(this);
 						targetSlide = index;
-						clearTimeout($.skdslider.interval);
-						$.skdslider.playSlide(element,slides, config,targetSlide);
+						clearTimeout($.fullslider.interval);
+						$.fullslider.playSlide(element,slides, config,targetSlide);
 						return false;
 					});
 			}
   };
 
- $.skdslider.playSlide=function(element,slides,config,targetSlide){
+ $.fullslider.playSlide=function(element,slides,config,targetSlide){
 	   
 	    element.find('.slide-navs li').removeClass('current-slide');	
-		slides.eq($.skdslider.currentSlide).fadeOut(config.fadeSpeed);
+		slides.eq($.fullslider.currentSlide).fadeOut(config.fadeSpeed);
 		
 		if(typeof (targetSlide)=='undefined'){
-	      targetSlide = ( $.skdslider.currentSlide+1 == slides.length ) ? 0 : $.skdslider.currentSlide+1;
+	      targetSlide = ( $.fullslider.currentSlide+1 == slides.length ) ? 0 : $.fullslider.currentSlide+1;
 		}
 		
 		element.find('.slide-navs li').eq(targetSlide).addClass('current-slide');
 	    slides.eq(targetSlide).fadeIn(config.fadeSpeed, function() {													 
-			$.skdslider.removeIEFilter($(this)[0]);
+			$.fullslider.removeIEFilter($(this)[0]);
 		});
-		$.skdslider.currentSlide=targetSlide;
+		$.fullslider.currentSlide=targetSlide;
 		
-		$.skdslider.interval=setTimeout((function() {
-            $.skdslider.playSlide(element,slides, config);
+		$.fullslider.interval=setTimeout((function() {
+            $.fullslider.playSlide(element,slides, config);
         }), config.delay);
 			   
   };
   
-  $.skdslider.removeIEFilter=function(elm){
+  $.fullslider.removeIEFilter=function(elm){
 	  if(elm.style.removeAttribute){
 		elm.style.removeAttribute('filter');
 	   }  
   }
 
- $.fn.skdslider = function(options){
+ $.fn.fullslider = function(options){
         return this.each(function(){
-            (new $.skdslider(this,options));
+            (new $.fullslider(this,options));
         });
     };
 	

@@ -8,12 +8,13 @@
 <meta name="robots" content="index, follow">
 <meta name="copyright" content="Samir Das">
 <meta name="language" content="EN">
+<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="src/skdslider.js"></script>
 <link href="src/skdslider.css" rel="stylesheet">
 <script type="text/javascript">
 		jQuery(document).ready(function(){
-			jQuery('#slider').skdslider({'delay':5000, 'fadeSpeed': 2000});
+			jQuery('#demo').skdslider({'delay':5000, 'fadeSpeed': 2000});
 		});
 </script>
 <style type="text/css">
@@ -22,15 +23,68 @@
 </head>
 <body>
 <h3>SKDSlider Full Width Image Slider Demo</h3>
-<div id="slider">
-<img class="slide" src="slides/1.jpg" />
-<img class="slide" src="slides/2.jpg" />
-<img class="slide" src="slides/3.jpg" />
-<img class="slide" src="slides/4.jpg" />
-<img class="slide" src="slides/5.jpg" />
+<div id="demo" class="skdslider">
+<ul>
+<li>
+<img src="slides/1.jpg" />
+<!--Slider Description example-->
+ <div class="slide-desc">
+		<h2>Slider Title 1</h2>
+		<p>Demo description here. Demo description here. Demo description here. Demo description here. Demo description here. <a class="more" href="#">more</a></p>
+  </div>
+</li>
+<li><img src="slides/2.jpg" />
+   <div class="slide-desc">
+		<h2>Slider Title 2</h2>
+		<p>Demo description here. Demo description here. Demo description here. Demo description here. Demo description here. <a class="more" href="#">more</a></p>
+  </div>
+</li>
+<li><img src="slides/3.jpeg" />
+<!--NO Description Here-->
+</li>
+<li><img src="slides/4.jpg" />
+  <div class="slide-desc">
+		<h2>Slider Title 4</h2>
+		<p>Demo description here. Demo description here. Demo description here. Demo description here. Demo description here. <a class="more" href="#">more</a></p>
+  </div>
+</li>
+<li><img src="slides/5.jpg" /></li>
+<li><img src="slides/6.jpg" />
+  <div class="slide-desc">
+		<h2>Slider Title 6</h2>
+		<p>Demo description here. Demo description here. Demo description here. Demo description here. Demo description here. <a class="more" href="#">more</a></p>
+  </div>
+</li>
+</ul>
 </div>
 <h3>How to use?</h3>
-<span class="demo-code"> $('#slider').skdslider({'delay':5000, 'fadeSpeed': 2000});</span>
+<span class="demo-code"> $('#demo').skdslider({'delay':5000, 'fadeSpeed': 2000});</span>
+<h3>Available Options</h3>
+<p>
+<table width="560" border="0" cellspacing="2" cellpadding="4">
+  <tr>
+    <td><strong>Option</strong></td>
+    <td><strong>Description</strong></td>
+  </tr>
+  <tr>
+    <td>delay</td>
+    <td>Delay duration between two  slides in micro seconds. Example: 5000</td>
+  </tr>
+  <tr>
+    <td>fadeSpeed</td>
+    <td>Fading Speed in micro seconds. Example: 2000</td>
+  </tr>
+  <tr>
+    <td>showNav</td>
+    <td>true/false - Default value is true. It will show/hide navigation icon</td>
+  </tr>
+  <tr>
+    <td>numericNav</td>
+    <td>true/false - Default value is false. If true, navigation will be numeric</td>
+  </tr>
+</table>
+
+</p>
 <h3>Download SkdSlider</h3>
 <p><a href="http://dandywebsolution.com/blog/download/skdslider.zip">Click here to download SKDSlider</a></p>
 <p><strong>Thanks :)</strong></p>
