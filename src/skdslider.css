@@ -77,3 +77,57 @@ body{ margin:0; padding:0;}
 .skdslider .slide-desc > p a.more:hover {
 text-decoration:underline;
 }
+
+.skdslider a.prev{
+    background: url("image/left.png") no-repeat scroll 0 0 transparent;
+	width:62px;
+	height:61px;
+	display:block;
+	cursor:pointer;
+	position:absolute;
+	top:44%;
+	left:2%;
+	opacity:.75;
+}
+
+.skdslider a.next{
+    background: url("image/right.png") no-repeat scroll 0 0 transparent;
+	width:62px;
+	height:61px;
+	display:block;
+	cursor:pointer;
+	position:absolute;
+	top:44%;
+	right:2%;
+	opacity:.75;
+}
+.skdslider a.prev:hover{
+  background: url("image/left-hover.png") no-repeat scroll 0 0 transparent;
+}
+.skdslider a.next:hover{
+  background: url("image/right-hover.png") no-repeat scroll 0 0 transparent;
+}
+
+.skdslider a.play{
+    background: url("image/play.png") no-repeat scroll center center #e1e1e1;
+	width:50px;
+	height:50px;
+	display:none;
+	cursor:pointer;
+	position:absolute;
+	top:44%;
+	left:48%;
+	opacity:.75;
+}
+
+.skdslider a.pause{
+    background: url("image/pause.png") no-repeat scroll center center #e1e1e1;
+	width:50px;
+	height:50px;
+	display:none;
+	cursor:pointer;
+	position:absolute;
+	top:44%;
+	left:48%;
+	opacity:.75;
+}

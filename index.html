@@ -14,7 +14,7 @@
 <link href="src/skdslider.css" rel="stylesheet">
 <script type="text/javascript">
 		jQuery(document).ready(function(){
-			jQuery('#demo').skdslider({'delay':5000, 'fadeSpeed': 2000});
+			jQuery('#demo').skdslider({'delay':5000, 'fadeSpeed': 2000,'showNextPrev':true,'showPlayButton':true,'autoStart':false});
 		});
 </script>
 <style type="text/css">
@@ -81,6 +81,18 @@
   <tr>
     <td>numericNav</td>
     <td>true/false - Default value is false. If true, navigation will be numeric</td>
+  </tr>
+  <tr>
+    <td>autoStart</td>
+    <td>true/false - Default value is true. Automatically start slideshow</td>
+  </tr>
+  <tr>
+    <td>showNextPrev</td>
+    <td>true/false - Default value is false. Either it will show next/prev button or not</td>
+  </tr>
+  <tr>
+    <td>showPlayButton</td>
+    <td>true/false - Default value is false. Either it will show play/pause button or not</td>
   </tr>
 </table>
 
