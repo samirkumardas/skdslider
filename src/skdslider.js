@@ -31,14 +31,14 @@
 		element.find('ul').addClass('slides');
         var slides = element.find('ul.slides li');
 		var targetSlide=0;
-		$.skdslider.currentSlide=0;
-		$.skdslider.currentState='pause';
+		config.currentSlide=0;
+		config.currentState='pause';
 	   
 	    $.skdslider.createNav(element,slides, config);
 	    slides.eq(targetSlide).show();
 		if (config.autoStart==true){
-		   $.skdslider.currentState='play';	
-           $.skdslider.interval=setTimeout(function() {
+		   config.currentState='play';	
+           config.interval=setTimeout(function() {
                     $.skdslider.playSlide(element,slides, config);
                 }, config.delay); 
 		}
@@ -70,7 +70,7 @@
 					element.find('.slide-navs li').click(function(){
 						index = element.find('.slide-navs li').index(this);
 						targetSlide = index;
-						clearTimeout($.skdslider.interval);
+						clearTimeout(config.interval);
 						$.skdslider.playSlide(element,slides, config,targetSlide);
 						return false;
 					});
@@ -84,28 +84,28 @@
 			 
 			 element.find('a.prev').click(function(){
 												   
-						if($.skdslider.currentSlide==0)targetSlide = (slides.length-1);
-						else targetSlide = ($.skdslider.currentSlide-1);
+						if(config.currentSlide==0)targetSlide = (slides.length-1);
+						else targetSlide = (config.currentSlide-1);
 				
-						clearTimeout($.skdslider.interval);
+						clearTimeout(config.interval);
 						$.skdslider.playSlide(element,slides, config,targetSlide);
 						return true;
 			 });
 			
 			 element.find('a.next').click(function(){
 												   
-						if(($.skdslider.currentSlide+1)==slides.length)targetSlide = 0;
-						else targetSlide = ($.skdslider.currentSlide+1);
+						if((config.currentSlide+1)==slides.length)targetSlide = 0;
+						else targetSlide = (config.currentSlide+1);
 						
-						clearTimeout($.skdslider.interval);
+						clearTimeout(config.interval);
 						$.skdslider.playSlide(element,slides, config,targetSlide);
 						return false;
 			 });
 		}
 		
 	  if (config.showPlayButton==true){
-		    
-			var playPause =($.skdslider.currentState=='play')?'<a class="play-control pause"></a>':'<a class="play-control play"></a>';  
+		   
+			var playPause =(config.currentState=='play' || config.autoStart==true)?'<a class="play-control pause"></a>':'<a class="play-control play"></a>';  
 		    
 			element.append(playPause);
 			
@@ -114,24 +114,24 @@
 		   
 		    element.find('a.play-control').click(function(){
 												   
-					if($.skdslider.currentState=='play')
+					if(config.currentState=='play')
 					{
-					   clearTimeout($.skdslider.interval);
-					   $.skdslider.currentState='pause';
+					   clearTimeout(config.interval);
+					   config.currentState='pause';
 					   $(this).addClass('play');
 					   $(this).removeClass('pause');
 					}
 					else
 					{
-					   $.skdslider.currentState='play';
+					   config.currentState='play';
 					   config.autoStart=true;
 					   $(this).addClass('pause');
 					   $(this).removeClass('play');
 					   
-					   if(($.skdslider.currentSlide+1)==slides.length)targetSlide = 0;
-					   else targetSlide = ($.skdslider.currentSlide+1);
+					   if((config.currentSlide+1)==slides.length)targetSlide = 0;
+					   else targetSlide = (config.currentSlide+1);
 					   
-					   clearTimeout($.skdslider.interval);
+					   clearTimeout(config.interval);
 					   $.skdslider.playSlide(element,slides, config,targetSlide);
 					}
 						
@@ -144,20 +144,20 @@
  $.skdslider.playSlide=function(element,slides,config,targetSlide){
 	   
 	    element.find('.slide-navs li').removeClass('current-slide');	
-		slides.eq($.skdslider.currentSlide).fadeOut(config.fadeSpeed);
+		slides.eq(config.currentSlide).fadeOut(config.fadeSpeed);
 		
 		if(typeof (targetSlide)=='undefined'){
-	      targetSlide = ( $.skdslider.currentSlide+1 == slides.length ) ? 0 : $.skdslider.currentSlide+1;
+	      targetSlide = ( config.currentSlide+1 == slides.length ) ? 0 : config.currentSlide+1;
 		}
 		
 		element.find('.slide-navs li').eq(targetSlide).addClass('current-slide');
 	    slides.eq(targetSlide).fadeIn(config.fadeSpeed, function() {													 
 			$.skdslider.removeIEFilter($(this)[0]);
 		});
-		$.skdslider.currentSlide=targetSlide;
+		config.currentSlide=targetSlide;
 		
-	  if (config.autoStart==true && $.skdslider.currentState=='play'){
-			$.skdslider.interval=setTimeout((function() {
+	  if (config.autoStart==true && config.currentState=='play'){
+			config.interval=setTimeout((function() {
 				$.skdslider.playSlide(element,slides, config);
 			}), config.delay);
 	  }
