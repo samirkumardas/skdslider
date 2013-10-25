@@ -20,6 +20,7 @@
 			'showNav':true,
 			'autoStart':true,
 			'showNextPrev':false,
+			'pauseOnHover':false,
 			'numericNav':false,
 			'showPlayButton':false
         };
@@ -48,6 +49,10 @@
                     $.skdslider.playSlide(element,slides, config);
                 }, config.delay); 
 		}
+		
+		if(config.pauseOnHover==true){
+		   slides.hover(function(){clearTimeout(config.interval);},function(){ $.skdslider.playSlide(element,slides, config);});	
+	    }
     };
 	
 
@@ -100,10 +105,7 @@
 	  if (config.showPlayButton==true){
 		   
 			var playPause =(config.currentState=='play' || config.autoStart==true)?'<a class="play-control pause"></a>':'<a class="play-control play"></a>';  
-		    
-			element.append(playPause);
-			
-			
+			element.append(playPause);			
 			element.hover(function(){element.find('a.play-control').css('display','block');},function(){element.find('a.play-control').css('display','none');});
 		   
 		    element.find('a.play-control').click(function(){
