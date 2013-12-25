@@ -113,6 +113,7 @@
 						targetSlide = index;
 						clearTimeout(config.interval);
 						config.currentState='play';
+						config.running=false;
 						$.skdslider.playSlide(element,slides, config,targetSlide);
 						return false;
 					});
@@ -184,6 +185,7 @@
 
 	clearTimeout(config.interval);
 	config.currentState='play';
+	config.running=false;
 	$.skdslider.playSlide(element,slides, config,targetSlide);
 	return true;
  }
@@ -194,6 +196,7 @@
 
 	clearTimeout(config.interval);
 	config.currentState='play';
+	config.running=false;
 	$.skdslider.playSlide(element,slides, config,targetSlide);
 	return true;
  }
