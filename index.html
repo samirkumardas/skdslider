@@ -10,21 +10,30 @@
 <meta name="language" content="EN">
 <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
 <script src="http://code.jquery.com/jquery.js"></script>
-<script src="src/skdslider.js"></script>
+<script src="src/skdslider.min.js"></script>
 <link href="src/skdslider.css" rel="stylesheet">
 <script type="text/javascript">
 		jQuery(document).ready(function(){
-			jQuery('#demo').skdslider({'delay':5000, 'fadeSpeed': 2000,'showNextPrev':true,'showPlayButton':true,'autoStart':false});
+			jQuery('#demo1').skdslider({'delay':5000, 'animationSpeed': 2000,'showNextPrev':true,'showPlayButton':true,'autoSlide':true,'animationType':'fading'});
+			jQuery('#demo2').skdslider({'delay':5000, 'animationSpeed': 1000,'showNextPrev':true,'showPlayButton':false,'autoSlide':true,'animationType':'sliding'});
+			jQuery('#demo3').skdslider({'delay':5000, 'animationSpeed': 2000,'showNextPrev':true,'showPlayButton':true,'autoSlide':true,'animationType':'fading'});
+			
+			jQuery('#responsive').change(function(){
+			  $('#responsive_wrapper').width(jQuery(this).val());
+			});
+			
 		});
 </script>
 <style type="text/css">
+body{ margin:0; padding:0;}
 .demo-code{ background-color:#ffffff; border:1px solid #333333; display:block; padding:10px;}
+.option-table td{ border-bottom:1px solid #eeeeee;}
 </style>
 </head>
 <body>
-<h3>SKDSlider Full Width Image Slider Demo</h3>
-<div id="demo" class="skdslider">
-<ul>
+<h3>SKDSlider is a jquery responsive Image Slider. It is very light weight and 100% responsive. It can be used in full width mode. Works on almost all browser.  It slides almost anything. Swipe/touch events will work for mobile devices. Here are some demos:</h3>
+<h4>Full Width Demo:</h4>
+<ul id="demo1">
 <li>
 <img src="slides/1.jpg" />
 <!--Slider Description example-->
@@ -57,12 +66,69 @@
 </li>
 </ul>
 </div>
+<br /><br />
+<h4>Sliding Demo:</h4>
+<div style="width:800px; margin:0 auto;">
+<ul id="demo2">
+<li>
+<img src="slides/1.jpg" />
+<!--Slider Description example-->
+ <div class="slide-desc">
+		<h2>Slider Title 1</h2>
+		<p>Demo description here. Demo description here. Demo description here. Demo description here. Demo description here. <a class="more" href="#">more</a></p>
+  </div>
+</li>
+<li><img src="slides/2.jpg" />
+   <div class="slide-desc">
+		<h2>Slider Title 2</h2>
+		<p>Demo description here. Demo description here. Demo description here. Demo description here. Demo description here. <a class="more" href="#">more</a></p>
+  </div>
+</li>
+<li><img src="slides/3.jpeg" />
+<!--NO Description Here-->
+</li>
+<li><img src="slides/4.jpg" />
+  <div class="slide-desc">
+		<h2>Slider Title 4</h2>
+		<p>Demo description here. Demo description here. Demo description here. Demo description here. Demo description here. <a class="more" href="#">more</a></p>
+  </div>
+</li>
+<li><img src="slides/5.jpg" /></li>
+<li><img src="slides/6.jpg" />
+  <div class="slide-desc">
+		<h2>Slider Title 6</h2>
+		<p>Demo description here. Demo description here. Demo description here. Demo description here. Demo description here. <a class="more" href="#">more</a></p>
+  </div>
+</li>
+</ul>
+</div>
+
+<br /><br />
+<h4>Responsive Demo:  Select Width:<select id="responsive"><option value="100%">Full Width</option><option selected="selected" value="800">800px</option><option value="640">640px</option><option value="480">480px</option></select></h4>
+<div id="responsive_wrapper" style="width:800px;margin:0 auto;">
+<ul id="demo3">
+<li>
+<img height="285" src="slides/1.jpg" />
+</li>
+<li><img height="285" src="slides/2.jpg" />
+</li>
+<li><img height="285" src="slides/3.jpeg" />
+<!--NO Description Here-->
+</li>
+<li><img height="285" src="slides/4.jpg" />
+</li>
+<li><img height="285" src="slides/5.jpg" /></li>
+<li><img height="285" src="slides/6.jpg" />
+</li>
+</ul>
+</div>
+
 <h3>How to use?</h3>
-<span class="demo-code"> $('#demo').skdslider({'delay':5000, 'fadeSpeed': 2000});</span>
+<span class="demo-code"> $('#demo').skdslider({'delay':5000, 'animationSpeed': 2000});</span>
 <h3>Available Options</h3>
 <p>
-<table width="560" border="0" cellspacing="2" cellpadding="4">
-  <tr>
+<table class="option-table" width="90%" border="0" cellspacing="2" cellpadding="4" align="center">
+  <tr bgcolor="#CCCCCC">
     <td><strong>Option</strong></td>
     <td><strong>Description</strong></td>
   </tr>
@@ -71,8 +137,12 @@
     <td>Delay duration between two  slides in micro seconds. Example: 5000</td>
   </tr>
   <tr>
-    <td>fadeSpeed</td>
+    <td>animationSpeed</td>
     <td>Fading Speed in micro seconds. Example: 2000</td>
+  </tr>
+  <tr>
+    <td>animationType</td>
+    <td>fading/sliding - Default value is fading.</td>
   </tr>
   <tr>
     <td>showNav</td>
@@ -83,7 +153,7 @@
     <td>true/false - Default value is false. If true, navigation will be numeric</td>
   </tr>
   <tr>
-    <td>autoStart</td>
+    <td>autoSlide</td>
     <td>true/false - Default value is true. Automatically start slideshow</td>
   </tr>
   <tr>
@@ -94,11 +164,55 @@
     <td>showPlayButton</td>
     <td>true/false - Default value is false. Either it will show play/pause button or not</td>
   </tr>
+  <tr>
+    <td>pauseOnHover</td>
+    <td>true/false - Default value is false. Pause sliding on mouse hover</td>
+  </tr>
 </table>
 
 </p>
 <h3>Download SkdSlider</h3>
-<p><a href="http://dandywebsolution.com/blog/download/skdslider.zip">Click here to download SKDSlider</a></p>
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-7175253790862528";
+/* SKDSlider */
+google_ad_slot = "4030515492";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><br />
+<a href="http://dandywebsolution.com/blog/download/skdslider.zip">Click here to download SKDSlider</a>
+
+<h3>Joomla Module for skdslider. Its here. Just download from following link. It is for joomla 2.x+ </h3>
+<p><a href="http://dandywebsolution.com/blog/download/mod_skdslider.zip">Click here to download SKDSlider Joomla Module</a><br />
+
+<h3><a href="http://www.opencart.com/index.php?route=extension/extension/info&extension_id=14217">Opencart Module for skdslider. </a></h3>
+
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-7175253790862528";
+/* SKDSlider */
+google_ad_slot = "4030515492";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></p>
+
+
 <p><strong>Thanks :)</strong></p>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-3415878-12', 'dandywebsolution.com');
+  ga('send', 'pageview');
+
+</script>
 </body>
 </html>

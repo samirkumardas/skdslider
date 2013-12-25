@@ -1,19 +1,20 @@
-/* CSS Document */
-body{ margin:0; padding:0;}
 .skdslider{
- height: 519px;
+ width:100%;
  position: relative;
+ display: block;
+ overflow:hidden;
 }
-.skdslider ul.slides{ margin:0; padding:0; list-style-type:none;}
 
+.skdslider:after {
+    content: '';
+    padding-top: 50%; 
+    display: block;
+}
+
+.skdslider ul.slides{ margin:0; padding:0; list-style-type:none;}
 .skdslider ul.slides li
 {
-   height: 519px;
-   left: 0;
-   position: absolute;
-   top: 0;
    display: none;
-   width:100%;
 }
 .skdslider ul.slides li img{
     width: 100%;
@@ -21,17 +22,17 @@ body{ margin:0; padding:0;}
 	border:0;
 }
 
-.skdslider .slide-navs {
+.skdslider ul.slide-navs {
     bottom: 20px;
     left: 50%;
     position: absolute;
 	list-style-type: none;
-	 margin: 0;
+    margin: 0;
     padding: 0;
 }
 
 
-.skdslider .slide-navs li {
+.skdslider ul.slide-navs li {
     float: left;
 	background: url("image/slide-bg.png") no-repeat scroll 0 0 transparent;
 	height:12px;
@@ -39,16 +40,18 @@ body{ margin:0; padding:0;}
 	margin-right:4px;
 	cursor:pointer;
 }
-.skdslider .slide-navs li.current-slide {
+.skdslider ul.slide-navs li.current-slide {
   background: url("image/slide-bg-active.png") no-repeat scroll 0 0 transparent;
 }
+
 .skdslider .slide-desc {
     background: url("image/slide_desc.png") repeat scroll 0 0 transparent;
     left: 0;
-    padding: 6px 25px 10px 85px;
+    padding: 0 15px 0 15px;
     position: absolute;
-    top: 327px;
-    width: 50%;
+    bottom: 15%;
+    max-width: 85%;
+	display:inline-block;
 }
 .skdslider .slide-desc > h2 {
     color: #CFDB0C;
@@ -69,9 +72,6 @@ body{ margin:0; padding:0;}
 .skdslider .slide-desc > p a.more {
     color:#990000;
 	font-size:20px;
-    float: right;
-    height: 18px;
-    width: 22px;
 	text-decoration:none;
 }
 .skdslider .slide-desc > p a.more:hover {
@@ -85,9 +85,9 @@ text-decoration:underline;
 	display:block;
 	cursor:pointer;
 	position:absolute;
-	top:44%;
+	top:50%;
 	left:2%;
-	
+	margin-top:-17px;
 }
 
 .skdslider a.next{
@@ -97,9 +97,9 @@ text-decoration:underline;
 	display:block;
 	cursor:pointer;
 	position:absolute;
-	top:44%;
+	top:50%;
 	right:2%;
-	
+	margin-top:-17px;
 }
 .skdslider a.prev:hover{
   
@@ -109,25 +109,42 @@ text-decoration:underline;
 }
 
 .skdslider a.play{
-    background: url("image/play.png") no-repeat scroll center center #e1e1e1;
+    background: url("image/play.png") no-repeat scroll center center transparent;
 	width:35px;
 	height:35px;
 	display:none;
 	cursor:pointer;
 	position:absolute;
-	top:44%;
+	top:50%;
 	left:48%;
-	
+	margin-top:-17px;
 }
 
 .skdslider a.pause{
-    background: url("image/pause.png") no-repeat scroll center center #e1e1e1;
+    background: url("image/pause.png") no-repeat scroll center center transparent;
 	width:35px;
 	height:35px;
 	display:none;
 	cursor:pointer;
 	position:absolute;
-	top:44%;
+	top:50%;
 	left:48%;
+	margin-top:-17px;
+}
+/*Some Responsive CSS */
+@media screen and (max-width:767px) {
+	.skdslider .slide-desc > h2 {
+		font-size: 20px;
+		margin-bottom: 5px;
+		margin-top: 5px;
+	}
 	
+	.skdslider .slide-desc > p {
+		font-size: 14px;
+		line-height: 15px;
+		margin-top: 5px;
+	}
+	.skdslider .slide-desc > p a.more {
+		font-size:14px;
+	}
 }

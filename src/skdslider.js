@@ -1,13 +1,12 @@
 /* =========================================================
 
 // SKD Slider
-
-// Datum: 2013-02-14
+// Update Date: 2013-12-24
 // Author: Samir Kumar Das
 // Mail: cse.samir@gmail.com
 // Web: http://dandywebsolution.com/skdslider
-
- *  $('#demo').skdslider({'delay':5000, 'fadeSpeed': 2000});
+// Version: 1.2
+ *  $('#demo').skdslider({'delay':5000, 'animationSpeed': 2000});
  *
 
 // ========================================================= */
@@ -16,13 +15,14 @@
         // settings
         var config = {
             'delay': 2000,
-            'fadeSpeed': 500,
+            'animationSpeed': 500,
 			'showNav':true,
-			'autoStart':true,
+			'autoSlide':true,
 			'showNextPrev':false,
 			'pauseOnHover':false,
 			'numericNav':false,
-			'showPlayButton':false
+			'showPlayButton':false,
+			'animationType':'fading', /* fading/sliding */
         };
 		
         if ( options ){$.extend(config, options);}
@@ -31,19 +31,39 @@
 	    var touch = (( "ontouchstart" in window ) || window.DocumentTouch && document instanceof DocumentTouch);
 	  
        
-	    var element=$(container);
+	    $(container).wrap('<div class="skdslider"></div>');
+		var element=$(container).closest('div.skdslider');
 		element.find('ul').addClass('slides');
         var slides = element.find('ul.slides li');
 		var targetSlide=0;
 		config.currentSlide=0;
 		config.currentState='pause';
+		config.running=false;
+		
+		if(config.animationType=='fading'){
+		   slides.each(function(){$(this).css({'position': 'absolute', 'left': '0','top': '0','bottom':'0','right':'0'});});
+		}
+		
+		if(config.animationType=='sliding'){
+		   slides.each(function(){$(this).css({'float': 'left', 'display': 'block','position': 'relative'});});
+		   
+		   var totalWidth=element.outerWidth()*slides.size();
+		   element.find('ul.slides').css({'position': 'absolute', 'left': '0','width':totalWidth});
+		   slides.css({'width':element.outerWidth(),'height':element.outerHeight()});
+		   
+		   $( window ).resize(function() {
+			  var totalWidth=element.outerWidth()*slides.size();
+		      element.find('ul.slides').css({'position': 'absolute', 'left': '0','width':totalWidth});
+		      slides.css({'width':element.outerWidth(),'height':element.outerHeight()});
+		   });
+		}
 		
 		//if (touch)
 		$.skdslider.enableTouch(element,slides, config);
 	   
 	    $.skdslider.createNav(element,slides, config);
 	    slides.eq(targetSlide).show();
-		if (config.autoStart==true){
+		if (config.autoSlide==true){
 		   config.currentState='play';	
            config.interval=setTimeout(function() {
                     $.skdslider.playSlide(element,slides, config);
@@ -51,8 +71,18 @@
 		}
 		
 		if(config.pauseOnHover==true){
-		   slides.hover(function(){clearTimeout(config.interval);},function(){ $.skdslider.playSlide(element,slides, config);});	
-	    }
+		   slides.hover(function(){
+			  if (config.autoSlide==true){					 
+			    config.currentState='pause'; 
+			    clearTimeout(config.interval);
+			  }
+		   },function(){ 
+		     if (config.autoSlide==true){		
+		         config.currentState='play'; 
+			     if(config.autoSlide==true) $.skdslider.playSlide(element,slides, config);
+		       }
+			} );
+		}
     };
 	
 
@@ -82,6 +112,7 @@
 						index = element.find('.slide-navs li').index(this);
 						targetSlide = index;
 						clearTimeout(config.interval);
+						config.currentState='play';
 						$.skdslider.playSlide(element,slides, config,targetSlide);
 						return false;
 					});
@@ -104,15 +135,16 @@
 		
 	  if (config.showPlayButton==true){
 		   
-			var playPause =(config.currentState=='play' || config.autoStart==true)?'<a class="play-control pause"></a>':'<a class="play-control play"></a>';  
+			var playPause =(config.currentState=='play' || config.autoSlide==true)?'<a class="play-control pause"></a>':'<a class="play-control play"></a>';  
 			element.append(playPause);			
 			element.hover(function(){element.find('a.play-control').css('display','block');},function(){element.find('a.play-control').css('display','none');});
 		   
 		    element.find('a.play-control').click(function(){
-												   
-					if(config.currentState=='play')
+											   
+					if(config.autoSlide==true)
 					{
 					   clearTimeout(config.interval);
+					   config.autoSlide=false;
 					   config.currentState='pause';
 					   $(this).addClass('play');
 					   $(this).removeClass('pause');
@@ -120,7 +152,7 @@
 					else
 					{
 					   config.currentState='play';
-					   config.autoStart=true;
+					   config.autoSlide=true;
 					   $(this).addClass('pause');
 					   $(this).removeClass('play');
 					   
@@ -129,8 +161,7 @@
 					   
 					   clearTimeout(config.interval);
 					   $.skdslider.playSlide(element,slides, config,targetSlide);
-					}
-						
+					}	
 				   return false;
 			 });
 	  }
@@ -142,6 +173,7 @@
 	else targetSlide = (config.currentSlide+1);
 	
 	clearTimeout(config.interval);
+	config.currentState='play';
 	$.skdslider.playSlide(element,slides, config,targetSlide);
 	return false;
  }
@@ -151,26 +183,49 @@
 	else targetSlide = (config.currentSlide-1);
 
 	clearTimeout(config.interval);
+	config.currentState='play';
+	$.skdslider.playSlide(element,slides, config,targetSlide);
+	return true;
+ }
+ 
+ $.skdslider.prev=function(element,slides,config){
+    if(config.currentSlide==0)targetSlide = (slides.length-1);
+	else targetSlide = (config.currentSlide-1);
+
+	clearTimeout(config.interval);
+	config.currentState='play';
 	$.skdslider.playSlide(element,slides, config,targetSlide);
 	return true;
  }
  
  $.skdslider.playSlide=function(element,slides,config,targetSlide){
 	   
-	    element.find('.slide-navs li').removeClass('current-slide');	
-		slides.eq(config.currentSlide).fadeOut(config.fadeSpeed);
-		
-		if(typeof (targetSlide)=='undefined'){
-	      targetSlide = ( config.currentSlide+1 == slides.length ) ? 0 : config.currentSlide+1;
+	    if(config.currentState=='play' && config.running==false){
+			
+				element.find('.slide-navs li').removeClass('current-slide');
+				if(typeof (targetSlide)=='undefined'){
+					  targetSlide = ( config.currentSlide+1 == slides.length ) ? 0 : config.currentSlide+1;
+				}
+				if(config.animationType=='fading'){
+					config.running=true;
+					slides.eq(config.currentSlide).fadeOut(config.animationSpeed);
+					slides.eq(targetSlide).fadeIn(config.animationSpeed, function() {													 
+						$.skdslider.removeIEFilter($(this)[0]);
+						 config.running=false;		
+					});
+				}
+				if(config.animationType=='sliding'){
+					var left=(targetSlide*element.outerWidth())*(-1);
+					config.running=true;
+					element.find('ul.slides').animate({left:left}, config.animationSpeed,function(){
+					  config.running=false;																		 
+					});
+				}
+				element.find('.slide-navs li').eq(targetSlide).addClass('current-slide');
+				config.currentSlide=targetSlide;
 		}
 		
-		element.find('.slide-navs li').eq(targetSlide).addClass('current-slide');
-	    slides.eq(targetSlide).fadeIn(config.fadeSpeed, function() {													 
-			$.skdslider.removeIEFilter($(this)[0]);
-		});
-		config.currentSlide=targetSlide;
-		
-	  if (config.autoStart==true && config.currentState=='play'){
+	  if (config.autoSlide==true && config.currentState=='play'){
 			config.interval=setTimeout((function() {
 				$.skdslider.playSlide(element,slides, config);
 			}), config.delay);
