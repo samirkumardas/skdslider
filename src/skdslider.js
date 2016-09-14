@@ -120,8 +120,8 @@
 			}
 			
 	    if (config.showNextPrev==true){
-			 var nextPrevButton ='<a class="prev"></a>'; 
-			     nextPrevButton +='<a class="next"></a>'; 
+			 var nextPrevButton ='<a class="prev"><i class="fa fa-chevron-left"></i></a>'; 
+			     nextPrevButton +='<a class="next"><i class="fa fa-chevron-right"></i></a>'; 
 				 
 			 element.append(nextPrevButton);
 			 
