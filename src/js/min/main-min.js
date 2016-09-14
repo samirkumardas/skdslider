@@ -1,0 +1,1 @@
+$(document).ready(function(){jQuery(".skdslider").skdslider({delay:5e3,animationSpeed:2e3,showNextPrev:!0,showPlayButton:!1,autoSlide:!0,animationType:"fading"})});

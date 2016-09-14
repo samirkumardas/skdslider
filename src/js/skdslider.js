@@ -106,7 +106,7 @@
 					var nav_width=element.find('.slide-navs')[0].offsetWidth;
 					nav_width=parseInt((nav_width/2));
 					nav_width=(-1)*nav_width;
-					element.find('.slide-navs').css('margin-left',nav_width);
+					element.find('.slide-navs');
 					// Slide marker clicked
 					element.find('.slide-navs li').click(function(){
 						index = element.find('.slide-navs li').index(this);
@@ -120,8 +120,8 @@
 			}
 			
 	    if (config.showNextPrev==true){
-			 var nextPrevButton ='<a class="prev"></a>'; 
-			     nextPrevButton +='<a class="next"></a>'; 
+			 var nextPrevButton ='<a class="prev"><i class="fa fa-chevron-left"></i></a>'; 
+			     nextPrevButton +='<a class="next"><i class="fa fa-chevron-right"></i></a>'; 
 				 
 			 element.append(nextPrevButton);
 			 

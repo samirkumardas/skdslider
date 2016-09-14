@@ -1,0 +1,132 @@
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
+body{
+	font-family: 'Open Sans', sans-serif;
+}
+.skdslider{
+	 width:100%;
+	 height: 600px;
+	 position: relative;
+	 display: block;
+	 overflow:hidden;
+	 .slide-navs {
+    	width: 100%;
+		bottom: 10px;
+		left: 0;
+		position: absolute;
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+    	text-align: center;
+		li {
+		  	display: inline-block;
+			background: rgba(255,255,255,1);
+			height: 15px;
+			width: 15px;
+			margin: 0px 6px;
+			cursor: pointer;
+			position: relative;
+			border-radius: 50%;
+			transition: all 0.5s;
+		}
+		.current-slide {
+			background: rgba(255,255,255,0.6);
+		}
+	}
+ 	.slides{
+	 		margin:0;
+	 		padding:0;
+	 		list-style-type:none;
+ 		li{
+			display: none;
+			position: relative;
+			img{
+			    width: 100%;
+				height:100%;
+				border:0;
+				position: absolute;
+				object-fit: cover;
+				display: block;
+			}
+		}
+ 	}
+ 	.slide-desc {
+	    left: 0;
+	    padding-bottom: 20px;
+	    position: absolute;
+	    bottom: 0;
+	    text-align: center;
+	    width: 100%;
+		display:inline-block;
+		background-color: rgba(0,0,0,0.5);
+		&> h1 {
+		    color: #CFDB0C;
+		    font-size: 25px;
+		    margin: 0px;
+		    text-transform: uppercase;
+		}
+		&> p {
+		    color: #FFFFFF;
+		    font-size: 16px;
+		    line-height: 20px;
+		    margin-top: 5px;
+		    font-weight: 300;
+		}
+		&> p a.more:hover {
+		text-decoration:underline;
+		}
+	}
+	a.prev{
+		width:35px;
+		height:35px;
+		display:block;
+		cursor:pointer;
+		position:absolute;
+		top:50%;
+		left:2%;
+		margin-top:-17px;
+		font-size: 20px;
+		color: white;
+		transition: all 0.4s;
+	}
+	a.next{
+		width:35px;
+		height:35px;
+		display:block;
+		cursor:pointer;
+		position:absolute;
+		top:50%;
+		right:2%;
+		margin-top:-17px;
+		font-size: 20px;
+		color: white;
+		transition: all 0.4s;
+	}
+	.next:hover, .prev:hover{
+		opacity: 0.7;
+		filter: alpha(opacity=80);
+	}
+	a.play{
+	    background: url("../img/play.png") no-repeat scroll center center transparent;
+		width:35px;
+		height:35px;
+		display:none;
+		cursor:pointer;
+		position:absolute;
+		top:50%;
+		left:48%;
+		margin-top:-17px;
+	}
+	a.pause{
+	    background: url("../img/pause.png") no-repeat scroll center center transparent;
+		width:35px;
+		height:35px;
+		display:none;
+		cursor:pointer;
+		position:absolute;
+		top:50%;
+		left:48%;
+		margin-top:-17px;
+	}
+}
+
+
