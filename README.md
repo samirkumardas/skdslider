@@ -1,8 +1,7 @@
-skdslider
+#skdslider
 =========
 
-Jquery full width image slider
-
-It is very light weight full width jquery image slider.  
-
-For demo visit: http://dandywebsolution.com/skdslider/
+##Mejoras del slider original 
+*Con object-fit cover a las imagenes 
+*Los estilos los prepare como para un proyecto en Scss
+*Los chevrones ahora son de fontawesome y simplifique algunas cosas
