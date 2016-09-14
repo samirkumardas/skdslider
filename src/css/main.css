@@ -1,0 +1,118 @@
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
+body {
+  font-family: 'Open Sans', sans-serif; }
+
+.skdslider {
+  width: 100%;
+  height: 600px;
+  position: relative;
+  display: block;
+  overflow: hidden; }
+  .skdslider .slide-navs {
+    width: 100%;
+    bottom: 10px;
+    left: 0;
+    position: absolute;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: center; }
+    .skdslider .slide-navs li {
+      display: inline-block;
+      background: white;
+      height: 15px;
+      width: 15px;
+      margin: 0px 6px;
+      cursor: pointer;
+      position: relative;
+      border-radius: 50%;
+      -webkit-transition: all 0.5s;
+      transition: all 0.5s; }
+    .skdslider .slide-navs .current-slide {
+      background: rgba(255, 255, 255, 0.6); }
+  .skdslider .slides {
+    margin: 0;
+    padding: 0;
+    list-style-type: none; }
+    .skdslider .slides li {
+      display: none;
+      position: relative; }
+      .skdslider .slides li img {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        position: absolute;
+        -o-object-fit: cover;
+           object-fit: cover;
+        display: block; }
+  .skdslider .slide-desc {
+    left: 0;
+    padding-bottom: 20px;
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    display: inline-block;
+    background-color: rgba(0, 0, 0, 0.5); }
+    .skdslider .slide-desc > h1 {
+      color: #CFDB0C;
+      font-size: 25px;
+      margin: 0px;
+      text-transform: uppercase; }
+    .skdslider .slide-desc > p {
+      color: #FFFFFF;
+      font-size: 16px;
+      line-height: 20px;
+      margin-top: 5px;
+      font-weight: 300; }
+    .skdslider .slide-desc > p a.more:hover {
+      text-decoration: underline; }
+  .skdslider a.prev {
+    width: 35px;
+    height: 35px;
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 2%;
+    margin-top: -17px;
+    font-size: 20px;
+    color: white;
+    -webkit-transition: all 0.4s;
+    transition: all 0.4s; }
+  .skdslider a.next {
+    width: 35px;
+    height: 35px;
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    right: 2%;
+    margin-top: -17px;
+    font-size: 20px;
+    color: white;
+    -webkit-transition: all 0.4s;
+    transition: all 0.4s; }
+  .skdslider .next:hover, .skdslider .prev:hover {
+    opacity: 0.7;
+    filter: alpha(opacity=80); }
+  .skdslider a.play {
+    background: url("../img/play.png") no-repeat scroll center center transparent;
+    width: 35px;
+    height: 35px;
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 48%;
+    margin-top: -17px; }
+  .skdslider a.pause {
+    background: url("../img/pause.png") no-repeat scroll center center transparent;
+    width: 35px;
+    height: 35px;
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 48%;
+    margin-top: -17px; }
