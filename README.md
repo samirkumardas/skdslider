@@ -1,8 +1,6 @@
 skdslider
 -----------
-jquery image carousel/slider
-
-Written in pure javascript. So don't have any javascript library like jquery.
+SKDSlider - Full Width Jquery Slider - Jquery Responsive Full Width Slider - Full Screen Slider- Simple Jquery Slider
 
 Demo
 -----
@@ -13,7 +11,7 @@ Codepen: http://codepen.io/whhhhhhaaaaaaat/pen/zrvVpg
 
 **How to use?**
 
-**markup **
+**markup**
     
     <link href="skdslider.css" rel="stylesheet">
     <script src="skdslider.min.js"></script>
