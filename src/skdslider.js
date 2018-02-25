@@ -15,6 +15,7 @@
             pauseOnHover: false,
             numericNav: false,
             showPlayButton: false,
+            stopSlidingAfter: false,
             animationType: 'fading', /* fading or sliding */
             slideSelector: '.slide',
             activeClass: 'active',
@@ -25,7 +26,8 @@
         this.isTouchable =!!('ontouchstart' in window) || !!(navigator.msMaxTouchPoints);
         this.currentSlide = 0;
         this.nextSlide = 0;
-        this.isSliding = true;
+        this.isPaused = false;
+        this.playPauseStatus = this.options.autoSlide;
         this.isAnimating = false;
         this.container = $(container);
         this.dom = {};
@@ -33,16 +35,21 @@
         this.element = this.container.wrap('<div class="skdslider"></div>').closest('div.skdslider');
         this.slides = this.container.find(this.options.slideSelector);
         this.totalSlides = this.slides.length;
+        this.dimension = {
+            width: this.element.outerWidth(),
+            height: this.element.outerHeight()
+        };
 
-         if (!this.totalSlides) {
+        if (!this.totalSlides) {
             throw('There are no slides found. Look likes your have not set slideSelector option properly');
         }
 
+        this.pivotImage = this.slides.eq(0).find('img');
         this.markup = {
             navs: '<li>%d</li>',
-            prev: '<a class="skdslider-prev"></a>',
-            next: '<a class="skdslider-next"></a>',
-            play: '<a class="skdslider-play"></a>'
+            prev: '<a class="prev"></a>',
+            next: '<a class="next"></a>',
+            play: '<a class="play"></a>'
         }
 
     
@@ -55,12 +62,27 @@
             this.slides.eq(this.nextSlide).addClass(this.options.activeClass);
             this.dom.navs.eq(this.nextSlide).addClass(this.options.activeClass);
 
+            if (this.options.stopSlidingAfter) {
+                if (this.options.stopSlidingAfter == 'all') {
+                    this.options.stopSlidingAfter = this.slides.length;
+                }
+                this.options.stopSlidingAfter -= 1;
+            }
+
+            if (this.dimension.height == 0 && this.pivotImage[0].complete) {
+                this.getDimension();
+            }
+
             if (this.options.autoSlide) {
                 this.play();
+                if (this.dom.play) {
+                    this.dom.play.removeClass('play').addClass('pause');
+                }
             }
         }
 
         this.next = function() {
+            this.isAnimating = false;
             this.nextSlide++;
             if(this.nextSlide == this.totalSlides) {
                 this.nextSlide = 0;
@@ -69,6 +91,7 @@
         };
 
         this.prev = function() {
+            this.isAnimating = false;
             this.nextSlide--;
             if(this.nextSlide == -1) {
                 this.nextSlide = this.totalSlides - 1;
@@ -78,15 +101,12 @@
 
         this.animate = function() {
 
-            if (this.isAnimating || !this.isSliding) {
-                return false;
-            }
-
             this.isAnimating = true;
             this.dom.navs.removeClass(this.options.activeClass);
             this.dom.navs.eq(this.nextSlide).addClass(this.options.activeClass);
             this.slides.removeClass(this.options.activeClass);
             this.slides.eq(this.nextSlide).addClass(this.options.activeClass);
+            this.stopAnimation();
 
             if (this.options.animationType == 'fading') {
                 this.slides.eq(this.currentSlide).fadeOut(this.options.animationSpeed);
@@ -96,9 +116,11 @@
             } else {
                 var left,
                     width;
-
-                width = element.outerWidth();
-                left = (-1 * this.targetSlide * width); 
+                width = this.element.outerWidth();
+                if (width != this.slides.eq(0).outerWidth()) {
+                    this.setDimension();
+                }
+                left = (-1 * this.nextSlide * width); 
                 this.container.animate({left:left}, this.options.animationSpeed, function() {
                     _self.isAnimating = false;
                 });
@@ -110,10 +132,15 @@
         this.play = function () {
             this.removeTimer();
             this.animate();
-            if (this.isSliding) {
+            this.addTimer();
+        };
+
+        this.addTimer = function() {
+            if (!this.isPaused && this.options.autoSlide) {
                 this.timer = setTimeout(this.next.bind(this), this.options.delay);
             }
-        };
+            this.handleStopAtSlide();
+        }
 
         this.removeTimer = function() {
             if (this.timer) {
@@ -121,6 +148,26 @@
                 this.timer = '';
             }
         };
+
+
+        this.stopAnimation = function() {
+            if (this.options.animationType == 'fading') {
+                this.slides.stop();
+            } else {
+                this.container.stop();
+            }
+        };
+
+        this.handleStopAtSlide = function() {
+            if (this.options.stopSlidingAfter && this.options.stopSlidingAfter == this.nextSlide) {
+                if (this.dom.play) {
+                    this.dom.play.removeClass('pause').addClass('play');
+                }
+                this.isPaused = true;
+                this.playPauseStatus = false;
+                this.options.autoSlide = false;
+            }
+        }
 
         this.createNav = function() {
             var markup = '',
@@ -136,7 +183,7 @@
             }
 
             if (this.options.showNav) {
-                navs = $('<ul class="skdslider-navs">'+markup+'</ul>');
+                navs = $('<ul class="slide-navs">'+markup+'</ul>');
                 this.element.append(navs);
                 this.dom.navs = navs.children();
             }
@@ -148,7 +195,7 @@
             }
 
             if (this.options.showPlayButton) {
-                this.dom.prev = $(this.markup.play);
+                this.dom.play = $(this.markup.play);
                 this.element.append(this.dom.play);
             }
         };
@@ -166,8 +213,8 @@
             if(this.options.animationType=='sliding') {
                 totalWidth = this.element.outerWidth() * this.totalSlides;
                 this.container.css({'position': 'absolute', 'left': '0', 'width':totalWidth});
-                //slides.css({'width':element.outerWidth(),'height':element.outerHeight()});
             }
+            this.setDimension();
         };
 
         this.enableEvents = function() {
@@ -181,7 +228,6 @@
                     e.preventDefault();
                     this.nextSlide = this.dom.navs.index(e.target); 
                     this.isAnimating = false;
-                    this.isSliding = true;
                     this.play();
                 }.bind(this));
             }
@@ -203,34 +249,46 @@
             if (this.dom.play) {
                 this.dom.play.on('click', function(e) {
                     e.preventDefault();
-                    if (this.isSliding) {
-                        this.isSliding = false;
+                    if (this.playPauseStatus) {
+                        this.isPaused = true;
+                        this.playPauseStatus = false;
                         this.removeTimer();
-                        this.dom.play.removeClass('play').addClass('pause');
+                        this.stopAnimation();
+                        this.dom.play.removeClass('pause').addClass('play');
                     } else {
-                       this.isSliding = true;
+                       this.isPaused = false;
+                       this.playPauseStatus = true;
                        this.next();
-                       this.dom.play.removeClass('pause').addClass('play');
+                       this.dom.play.removeClass('play').addClass('pause');
                     }
 
                 }.bind(this));
             }
 
             /* general events */
-            this.element.on('hover', function(e) {
+            this.element.on('mouseenter', function(e) {
                 e.preventDefault();
-                if (this.options.pauseOnHover) {
-                    this.isSliding = !this.isSliding;
+                if (this.dom.play) {
+                    this.dom.play.show();
                 }
-                this.dom.play.show();
+                if (!this.playPauseStatus) return;
+                if (this.options.pauseOnHover) {
+                    this.isPaused = true;
+                    this.removeTimer();
+                    this.stopAnimation();
+                }
             }.bind(this));
 
-            this.element.on('blur', function(e) {
+            this.element.on('mouseleave', function(e) {
                 e.preventDefault();
-                if (this.options.pauseOnHover) {
-                    this.isSliding = !this.isSliding;
+                if (this.dom.play) {
+                    this.dom.play.hide();
                 }
-                this.dom.play.hide();
+                if (!this.playPauseStatus) return;
+                if (this.options.pauseOnHover) {
+                    this.isPaused = false;
+                    this.addTimer();
+                }
             }.bind(this));
 
             /* touch events */
@@ -257,14 +315,29 @@
                 }.bind(this));
             }
 
-
-            $(window).resize(function() {
-                var totalWidth = this.element.outerWidth() * this.totalSlides;
-                this.container.css({'position': 'absolute', 'left': '0','width':totalWidth});
-                //slides.css({'width':element.outerWidth(),'height':element.outerHeight()});
-            }.bind(this));
+            $(window).resize(this.setDimension);
+            this.pivotImage.on('load', this.getDimension);
         };
 
+        this.getDimension = function() {
+            this.dimension.width = this.pivotImage[0].naturalWidth || this.pivotImage[0].target.width; 
+            this.dimension.height = this.pivotImage[0].naturalHeight || this.pivotImage[0].height;
+            this.setDimension();
+        }
+
+        this.setDimension = function() {
+             var totalWidth = this.options.animationType == 'fading' ? this.element.outerWidth() : (this.element.outerWidth() * this.totalSlides),
+                 slierWidth = this.element.outerWidth(),
+                 sliderHeight = Math.ceil(this.dimension.height * (slierWidth / this.dimension.width));
+                 sliding = {width: totalWidth, height: sliderHeight},
+                 fading =  {height: sliderHeight};
+             this.container.css(this.options.animationType == 'fading' ? fading : sliding);
+             this.element.css({height:sliderHeight});
+             this.slides.css({width:slierWidth});
+        }
+
+        this.setDimension = this.setDimension.bind(this);
+        this.getDimension = this.getDimension.bind(this);
         this.init();
     } 
 

@@ -7,7 +7,6 @@ Demo
 
 http://dandywebsolution.com/skdslider/
 
-Codepen: http://codepen.io/whhhhhhaaaaaaat/pen/zrvVpg
 
 **How to use?**
 
@@ -16,18 +15,29 @@ Codepen: http://codepen.io/whhhhhhaaaaaaat/pen/zrvVpg
     <link href="skdslider.css" rel="stylesheet">
     <script src="skdslider.min.js"></script>
     
-     <ul id="demo1">
-        <li>
-        <img height="285" src="slides/1.jpg" />
-        </li>
-        <li><img height="285" src="slides/2.jpg" />
-        </li>
-        <li><img height="285" src="slides/3.jpeg" />
-      </ul>
+     <div id="demo1">
+        <div class="slide">
+           <img height="285" src="slides/1.jpg" />
+        </div>
+        <div class="slide">
+           <img height="285" src="slides/2.jpg" />
+        </div>
+        <div class="slide">
+          <img height="285" src="slides/3.jpeg" />
+        </div>
+     </div>
 
 **Javascript**
 
-    $('#demo1').skdslider({delay:5000, animationSpeed: 2000,showNextPrev:true,showPlayButton:true,autoSlide:true,animationType:'fading'});
+    $('#demo1').skdslider({
+        slideSelector: '.slide',
+        delay:5000,
+        animationSpeed: 2000,
+        showNextPrev:true,
+        showPlayButton:true,
+        autoSlide:true,
+        animationType:'fading'
+    });
     
 Available options are:
 
@@ -35,6 +45,14 @@ Available options are:
   <tr bgcolor="#CCCCCC">
     <td><strong>Option</strong></td>
     <td><strong>Description</strong></td>
+  </tr>
+  <tr>
+    <td>slideSelector</td>
+    <td>Define your slide css selector. Default selector: .slide</td>
+  </tr>
+  <tr>
+    <td>activeClass</td>
+    <td>Define what class would be set as active class to the active slide. Defaul class name: active</td>
   </tr>
   <tr>
     <td>delay</td>
@@ -76,4 +94,9 @@ Available options are:
     <td>stopSlidingAfter</td>
     <td> Default value is false. Other allowed values are 'all', 1,2,3..    If this properties is set, sliding will  automatically stop at the specified slide</td>
   </tr>
+ <tr>
+    <td>onMarkup</td>
+    <td>It is a hooking function and will be invoked just before UI is generated. So it is possible to modify ui like navigiation layout without modify core file. (example: coming soon...) </td>
+  </tr>
+
 </table>
